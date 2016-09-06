@@ -1,6 +1,6 @@
 #!/bin/bash
 
-YOUR_FQDN=master.local
+YOUR_FQDN=localhost
 
 yum -y install wget gcc gcc-c++ autoconf automake libtool zlib-devel cmake openssl openssl-devel snappy snappy-devel bzip2 bzip2-devel protobuf protobuf-devel
 

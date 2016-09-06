@@ -27,3 +27,5 @@ The script will download, compile, configure and run the following pieces of sof
 - Spark 2.0.0
 
 Java, Hadoop and Spark are installed into /opt. Maven is installed into user's homedir. It is not needed once the script exits and can be safely removed.
+
+If everything goes well, Hadoop should be up and running and "Pi"-jobs (two last lines of install.sh) should execute without errors.
