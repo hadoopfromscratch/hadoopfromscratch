@@ -1,2 +1,2 @@
 # hadoopfromscratch
-Scripts to roll out your own hadoop distro.
+A set of tools to roll out your own hadoop distro.
