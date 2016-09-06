@@ -14,18 +14,19 @@ A set of tools to compile and roll out your own Hadoop distro for testing purpos
 
 Download install.sh and run it as root:
 
-```bash ./install.sh```
+```curl -s https://raw.githubusercontent.com/hadoopfromscratch/hadoopfromscratch/master/install.sh | bash```
 
+If everything goes well, Hadoop should be up and running and "Pi"-jobs (two last lines of install.sh) should execute without errors.
 
 ## Software and versions
 
-The script will download, compile, configure and run the following pieces of software.
+The script will download, compile, configure and run the following pieces of software:
 
 - Java 8u102
 - Maven 3.3.9
 - Hadoop 2.7.3
 - Spark 2.0.0
 
-Java, Hadoop and Spark are installed into /opt. Maven is installed into user's homedir. It is not needed once the script exits and can be safely removed.
-
-If everything goes well, Hadoop should be up and running and "Pi"-jobs (two last lines of install.sh) should execute without errors.
+- /opt will contain installed software (java, hadoop and spark. each in its own directory)
+- /data will contain Hadoop's data
+- User's home dir will contain maven directory and all downloaded sources. All its contents can be safely removed after the installation is finished.
