@@ -96,11 +96,11 @@ hdfs dfs -mkdir /tmp
 hdfs dfs -chmod 1777 /tmp
 
 cd ~
-wget http://apache.rediris.es/spark/spark-2.0.0/spark-2.0.0.tgz
-tar -xvf spark-2.0.0.tgz 
-cd ~/spark-2.0.0
+wget http://apache.rediris.es/spark/spark-2.0.1/spark-2.0.1.tgz
+tar -xvf spark-2.0.1.tgz 
+cd ~/spark-2.0.1
 dev/make-distribution.sh --name custom-spark --tgz -Phadoop-2.7 -Phive -Phive-thriftserver -Pyarn -DskipTests
-tar -C/opt -xvf spark-2.0.0-bin-custom-spark.tgz 
+tar -C/opt -xvf spark-2.0.1-bin-custom-spark.tgz 
 cd /opt
 mv spark-* spark
 echo "PATH=\"/opt/spark/bin:\$PATH\"" >> ~/.bashrc
@@ -116,5 +116,5 @@ spark.executor.memory            512m
 EOF
 
 yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar pi  4 100
-spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.0.0.jar 100
+spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.0.1.jar 100
 
