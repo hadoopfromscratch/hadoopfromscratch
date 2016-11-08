@@ -25,7 +25,7 @@ The script will download, compile, configure and run the following pieces of sof
 - Java 8u102
 - Maven 3.3.9
 - Hadoop 2.7.3
-- Spark 2.0.0
+- Spark 2.0.1
 
 ## Layout
 
