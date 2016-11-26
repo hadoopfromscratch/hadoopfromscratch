@@ -16,6 +16,12 @@ mv ~/apache-maven-3.3.9 ~/maven
 echo "PATH=\"/root/maven/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
+wget http://apache.uvigo.es//ant/binaries/apache-ant-1.9.7-bin.tar.bz2
+tar -xvf ~/apache-ant-1.9.7-bin.tar.bz2
+mv ~/apache-ant-1.9.7 ~/ant
+echo "PATH=\"/root/ant/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
+
 wget http://apache.rediris.es/hadoop/common/hadoop-2.7.3/hadoop-2.7.3-src.tar.gz
 tar -xvf ~/hadoop-2.7.3-src.tar.gz
 mv ~/hadoop-2.7.3-src ~/hadoop-src
@@ -118,3 +124,11 @@ EOF
 yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar pi  4 100
 spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.0.1.jar 100
 
+yum -y install git
+git clone git://git.apache.org/cassandra.git /opt/cassandra
+cd /opt/cassandra/
+git checkout cassandra-3.11
+ant
+echo "PATH=\"/opt/cassandra/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
+cassandra -R
