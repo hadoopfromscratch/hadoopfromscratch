@@ -121,9 +121,6 @@ spark.driver.memory              512m
 spark.executor.memory            512m
 EOF
 
-yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar pi  4 100
-spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.0.1.jar 100
-
 yum -y install git
 git clone git://git.apache.org/cassandra.git /opt/cassandra
 cd /opt/cassandra/
@@ -132,3 +129,7 @@ ant
 echo "PATH=\"/opt/cassandra/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 cassandra -R
+
+# Test
+yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar pi  4 100
+spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.0.1.jar 100
