@@ -124,6 +124,14 @@ EOF
 yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar pi  4 100
 spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.0.1.jar 100
 
+cd ~
+wget http://apache.rediris.es/sqoop/1.4.6/sqoop-1.4.6.tar.gz
+tar xvf sqoop-1.4.6.tar.gz
+cd sqoop-1.4.6
+ant package -Dhadoop.version=2.7.3 -Dhcatalog.version=2.1.0
+echo "PATH=\"/opt/sqoop/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
+
 yum -y install git
 git clone git://git.apache.org/cassandra.git /opt/cassandra
 cd /opt/cassandra/
