@@ -132,6 +132,15 @@ ant package -Dhadoop.version=2.7.3 -Dhcatalog.version=2.1.0
 echo "PATH=\"/opt/sqoop/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
+cd ~
+wget http://apache.rediris.es/flume/1.7.0/apache-flume-1.7.0-src.tar.gz
+tar -xvf apache-flume-1.7.0-src.tar.gz 
+cd apache-flume-1.7.0-src
+mvn package -DskipTests -DsourceJavaVersion=1.8 -DtargetJavaVersion=1.8 -Dhadoop2.version=2.7.3 -Dhive.version=1.2.0
+tar -C/opt -xvf  flume-ng-dist/target/apache-flume-1.7.0-bin.tar.gz 
+echo "PATH=\"/opt/flume/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
+
 yum -y install git
 git clone git://git.apache.org/cassandra.git /opt/cassandra
 cd /opt/cassandra/
