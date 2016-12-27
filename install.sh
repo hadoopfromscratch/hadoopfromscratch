@@ -107,7 +107,7 @@ cd ~
 wget http://apache.rediris.es/spark/spark-2.0.2/spark-2.0.2.tgz
 tar -xvf spark-2.0.2.tgz 
 cd ~/spark-2.0.2
-dev/make-distribution.sh --name custom-spark --tgz "-Pyarn,hadoop-provided,hadoop-2.7" -DskipTests
+dev/make-distribution.sh --name custom-spark --tgz "-Pyarn,hadoop-2.7" -DskipTests
 tar -C/opt -xvf spark-2.0.2-bin-custom-spark.tgz 
 cd /opt
 mv spark-* spark
@@ -116,7 +116,10 @@ source ~/.bashrc
 
 cd /opt/spark/conf
 
-echo "HADOOP_CONF_DIR=\"/opt/hadoop/etc/hadoop\"" > spark-env.sh
+cat << EOF > spark-env.sh
+HADOOP_CONF_DIR="/opt/hadoop/etc/hadoop"
+#export SPARK_DIST_CLASSPATH=$(hadoop classpath)
+EOF
 
 cat << EOF > spark-defaults.conf
 spark.driver.memory              512m
