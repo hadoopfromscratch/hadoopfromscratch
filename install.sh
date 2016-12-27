@@ -4,9 +4,9 @@ YOUR_FQDN=localhost
 
 yum -y install wget gcc gcc-c++ autoconf automake libtool zlib-devel cmake openssl openssl-devel snappy snappy-devel bzip2 bzip2-devel protobuf protobuf-devel
 
-wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-x64.tar.gz
-tar xvf ~/jdk-8u102-linux-x64.tar.gz
-mv ~/jdk1.8.0_102 /opt/java
+wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz
+tar xvf ~/jdk-8u112-linux-x64.tar.gz
+mv ~/jdk1.8.0_112 /opt/java
 echo "PATH=\"/opt/java/bin:\$PATH\"" >> ~/.bashrc
 echo "export JAVA_HOME=\"/opt/java\"" >> ~/.bashrc
 
@@ -16,7 +16,7 @@ mv ~/apache-maven-3.3.9 ~/maven
 echo "PATH=\"/root/maven/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
-wget http://apache.uvigo.es//ant/binaries/apache-ant-1.9.7-bin.tar.bz2
+wget http://apache.uvigo.es/ant/binaries/apache-ant-1.9.7-bin.tar.bz2
 tar -xvf ~/apache-ant-1.9.7-bin.tar.bz2
 mv ~/apache-ant-1.9.7 ~/ant
 echo "PATH=\"/root/ant/bin:\$PATH\"" >> ~/.bashrc
@@ -38,6 +38,8 @@ sed -i '1iJAVA_HOME=/opt/java' /opt/hadoop/etc/hadoop/yarn-env.sh
 cat << EOF > /opt/hadoop/etc/hadoop/core-site.xml
 <configuration>
   <property><name>fs.defaultFS</name><value>hdfs://$YOUR_FQDN</value></property>
+  <property><name>hadoop.proxyuser.root.groups</name><value>*</value></property>
+  <property><name>hadoop.proxyuser.root.hosts</name><value>*</value></property>
 </configuration>
 EOF
 
@@ -102,11 +104,11 @@ hdfs dfs -mkdir /tmp
 hdfs dfs -chmod 1777 /tmp
 
 cd ~
-wget http://apache.rediris.es/spark/spark-2.0.1/spark-2.0.1.tgz
-tar -xvf spark-2.0.1.tgz 
-cd ~/spark-2.0.1
-dev/make-distribution.sh --name custom-spark --tgz -Phadoop-2.7 -Phive -Phive-thriftserver -Pyarn -DskipTests
-tar -C/opt -xvf spark-2.0.1-bin-custom-spark.tgz 
+wget http://apache.rediris.es/spark/spark-2.0.2/spark-2.0.2.tgz
+tar -xvf spark-2.0.2.tgz 
+cd ~/spark-2.0.2
+dev/make-distribution.sh --name custom-spark --tgz "-Pyarn,hadoop-provided,hadoop-2.7" -DskipTests
+tar -C/opt -xvf spark-2.0.2-bin-custom-spark.tgz 
 cd /opt
 mv spark-* spark
 echo "PATH=\"/opt/spark/bin:\$PATH\"" >> ~/.bashrc
@@ -121,6 +123,41 @@ spark.driver.memory              512m
 spark.executor.memory            512m
 EOF
 
+cd ~
+wget http://apache.rediris.es/hive/hive-2.1.1/apache-hive-2.1.1-src.tar.gz
+tar -xvf apache-hive-2.1.1-src.tar.gz
+cd apache-hive-2.1.1-src
+mvn clean package -Dhadoop.version=2.7.3 -DskipTests -Pdist
+tar -C/opt -xvf ./packaging/target/apache-hive-2.1.1-bin.tar.gz
+mv /opt/apache-hive-* /opt/hive
+echo "PATH=\"/opt/hive/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
+
+cd ~
+yum -y install mariadb-server mariadb
+systemctl restart mariadb
+systemctl enable mariadb
+mysql -e "create database hive"
+mysql -e "grant all privileges on hive.* to 'hive'@'%' identified by 'hive'"
+mysql -e "grant all privileges on hive.* to 'hive'@'localhost' identified by 'hive'"
+wget http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.40.tar.gz
+tar -xvf mysql-connector-java-5.1.40.tar.gz 
+cp mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar /opt/hive/lib/
+
+cd /opt/hive
+cat << EOF > /opt/hive/conf/hive-site.xml
+<configuration>
+  <property><name>javax.jdo.option.ConnectionURL</name><value>jdbc:mysql://$YOUR_FQDN/hive?createDatabaseIfNotExist=true</value></property>
+  <property><name>javax.jdo.option.ConnectionDriverName</name><value>com.mysql.jdbc.Driver</value></property>
+  <property><name>javax.jdo.option.ConnectionUserName</name><value>hive</value></property>
+  <property><name>javax.jdo.option.ConnectionPassword</name><value>hive</value></property>
+  <property><name>hive.server2.enable.doAs</name><value>true</value></property>
+</configuration>
+EOF
+schematool -dbType mysql -initSchema
+hive --service metastore --hiveconf hive.log.dir=/opt/hive/logs --hiveconf hive.log.file=metastore.log >/dev/null 2>&1 &
+hive --service hiveserver2 --hiveconf hive.log.dir=/opt/hive/logs --hiveconf hive.log.file=hs2.log >/dev/null 2>&1 &
+
 yum -y install git
 git clone git://git.apache.org/cassandra.git /opt/cassandra
 cd /opt/cassandra/
@@ -132,4 +169,4 @@ cassandra -R
 
 # Test
 yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar pi  4 100
-spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.0.1.jar 100
+spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.0.2.jar 100
