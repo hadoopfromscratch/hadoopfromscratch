@@ -140,9 +140,13 @@ cd ~
 yum -y install mariadb-server mariadb
 systemctl restart mariadb
 systemctl enable mariadb
-mysql -e "create database hive"
-mysql -e "grant all privileges on hive.* to 'hive'@'%' identified by 'hive'"
-mysql -e "grant all privileges on hive.* to 'hive'@'localhost' identified by 'hive'"
+cat << EOF | mysql
+delete from mysql.user WHERE User='';
+create database hive;
+grant all privileges on hive.* to 'hive'@'%' identified by 'hive';
+grant all privileges on hive.* to 'hive'@'localhost' identified by 'hive';
+flush privileges;
+EOF
 wget http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.40.tar.gz
 tar -xvf mysql-connector-java-5.1.40.tar.gz 
 cp mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar /opt/hive/lib/
@@ -170,6 +174,15 @@ tar -C/opt -xvf  flume-ng-dist/target/apache-flume-1.7.0-bin.tar.gz
 mv /opt/apache-flume* /opt/flume
 echo "PATH=\"/opt/flume/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
+
+# Sqoop does not work with hive2 yet
+#cd ~
+#wget http://apache.rediris.es/sqoop/1.4.6/sqoop-1.4.6.tar.gz
+#tar xvf sqoop-1.4.6.tar.gz
+#cd sqoop-1.4.6
+#ant package -Dhadoop.version=2.7.3 -Dhcatalog.version=2.1.0
+#echo "PATH=\"/opt/sqoop/bin:\$PATH\"" >> ~/.bashrc
+#source ~/.bashrc
 
 yum -y install git
 git clone git://git.apache.org/cassandra.git /opt/cassandra
