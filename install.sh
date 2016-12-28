@@ -140,9 +140,13 @@ cd ~
 yum -y install mariadb-server mariadb
 systemctl restart mariadb
 systemctl enable mariadb
-mysql -e "create database hive"
-mysql -e "grant all privileges on hive.* to 'hive'@'%' identified by 'hive'"
-mysql -e "grant all privileges on hive.* to 'hive'@'localhost' identified by 'hive'"
+cat << EOF | mysql
+delete from mysql.user WHERE User='';
+create database hive;
+grant all privileges on hive.* to 'hive'@'%' identified by 'hive';
+grant all privileges on hive.* to 'hive'@'localhost' identified by 'hive';
+flush privileges;
+EOF
 wget http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.40.tar.gz
 tar -xvf mysql-connector-java-5.1.40.tar.gz 
 cp mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar /opt/hive/lib/
