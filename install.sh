@@ -161,6 +161,16 @@ schematool -dbType mysql -initSchema
 hive --service metastore --hiveconf hive.log.dir=/opt/hive/logs --hiveconf hive.log.file=metastore.log >/dev/null 2>&1 &
 hive --service hiveserver2 --hiveconf hive.log.dir=/opt/hive/logs --hiveconf hive.log.file=hs2.log >/dev/null 2>&1 &
 
+cd ~
+wget http://apache.rediris.es/flume/1.7.0/apache-flume-1.7.0-src.tar.gz
+tar -xvf apache-flume-1.7.0-src.tar.gz 
+cd apache-flume-1.7.0-src
+mvn package -DskipTests -DsourceJavaVersion=1.8 -DtargetJavaVersion=1.8 -Dhadoop2.version=2.7.3 -Dhive.version=2.1.1
+tar -C/opt -xvf  flume-ng-dist/target/apache-flume-1.7.0-bin.tar.gz 
+mv /opt/apache-flume* /opt/flume
+echo "PATH=\"/opt/flume/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
+
 yum -y install git
 git clone git://git.apache.org/cassandra.git /opt/cassandra
 cd /opt/cassandra/
