@@ -138,6 +138,7 @@ tar -xvf apache-flume-1.7.0-src.tar.gz
 cd apache-flume-1.7.0-src
 mvn package -DskipTests -DsourceJavaVersion=1.8 -DtargetJavaVersion=1.8 -Dhadoop2.version=2.7.3 -Dhive.version=1.2.0
 tar -C/opt -xvf  flume-ng-dist/target/apache-flume-1.7.0-bin.tar.gz 
+mv /opt/apache-flume* /opt/flume
 echo "PATH=\"/opt/flume/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
