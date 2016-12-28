@@ -27,7 +27,9 @@ The script will download, compile, configure and run the following pieces of sof
 - Maven 3.3.9
 - Hadoop 2.7.3
 - Spark 2.0.1
+- Hive 2.1.1
 - Cassandra 3.11
+- Flume 1.7.0
 
 ## Layout
 
