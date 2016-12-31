@@ -22,6 +22,30 @@ mv ~/apache-ant-1.9.7 ~/ant
 echo "PATH=\"/root/ant/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
+cd ~
+wget http://apache.rediris.es/zookeeper/zookeeper-3.4.8/zookeeper-3.4.8.tar.gz
+tar -xvf zookeeper-3.4.8.tar.gz 
+cd zookeeper-3.4.8
+ant clean tar
+tar -C/opt -xvf build/zookeeper-3.4.8.tar.gz 
+mv /opt/zookeeper-3.4.8 /opt/zookeeper
+mkdir /opt/zookeeper/data
+echo 1 > /opt/zookeeper/data/myid
+
+cat << EOF > /opt/zookeeper/zoo.cfg
+clientPort=2181
+dataDir=/opt/zookeeper/data
+server.1=$YOUR_FQDN:2888:3888
+EOF
+
+cat << EOF > /opt/zookeeper/conf/zookeeper-env.sh 
+ZOO_LOG_DIR=/opt/zookeeper/logs
+EOF
+echo "PATH=\"/opt/zookeeper/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
+zkServer.sh start
+
+cd ~
 wget http://apache.rediris.es/hadoop/common/hadoop-2.7.3/hadoop-2.7.3-src.tar.gz
 tar -xvf ~/hadoop-2.7.3-src.tar.gz
 mv ~/hadoop-2.7.3-src ~/hadoop-src
