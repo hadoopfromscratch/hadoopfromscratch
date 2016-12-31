@@ -4,18 +4,21 @@ YOUR_FQDN=localhost
 
 yum -y install wget gcc gcc-c++ autoconf automake libtool zlib-devel cmake openssl openssl-devel snappy snappy-devel bzip2 bzip2-devel protobuf protobuf-devel
 
+cd ~
 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz
 tar xvf ~/jdk-8u112-linux-x64.tar.gz
 mv ~/jdk1.8.0_112 /opt/java
 echo "PATH=\"/opt/java/bin:\$PATH\"" >> ~/.bashrc
 echo "export JAVA_HOME=\"/opt/java\"" >> ~/.bashrc
 
+cd ~
 wget http://apache.rediris.es/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
 tar xvf ~/apache-maven-3.3.9-bin.tar.gz
 mv ~/apache-maven-3.3.9 ~/maven
 echo "PATH=\"/root/maven/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
+cd ~
 wget http://apache.uvigo.es/ant/binaries/apache-ant-1.9.7-bin.tar.bz2
 tar -xvf ~/apache-ant-1.9.7-bin.tar.bz2
 mv ~/apache-ant-1.9.7 ~/ant
