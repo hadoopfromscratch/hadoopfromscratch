@@ -4,24 +4,51 @@ YOUR_FQDN=localhost
 
 yum -y install wget gcc gcc-c++ autoconf automake libtool zlib-devel cmake openssl openssl-devel snappy snappy-devel bzip2 bzip2-devel protobuf protobuf-devel
 
+cd ~
 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz
 tar xvf ~/jdk-8u112-linux-x64.tar.gz
 mv ~/jdk1.8.0_112 /opt/java
 echo "PATH=\"/opt/java/bin:\$PATH\"" >> ~/.bashrc
 echo "export JAVA_HOME=\"/opt/java\"" >> ~/.bashrc
 
+cd ~
 wget http://apache.rediris.es/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
 tar xvf ~/apache-maven-3.3.9-bin.tar.gz
 mv ~/apache-maven-3.3.9 ~/maven
 echo "PATH=\"/root/maven/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
+cd ~
 wget http://apache.uvigo.es/ant/binaries/apache-ant-1.9.7-bin.tar.bz2
 tar -xvf ~/apache-ant-1.9.7-bin.tar.bz2
 mv ~/apache-ant-1.9.7 ~/ant
 echo "PATH=\"/root/ant/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
+cd ~
+wget http://apache.rediris.es/zookeeper/zookeeper-3.4.8/zookeeper-3.4.8.tar.gz
+tar -xvf zookeeper-3.4.8.tar.gz 
+cd zookeeper-3.4.8
+ant clean tar
+tar -C/opt -xvf build/zookeeper-3.4.8.tar.gz 
+mv /opt/zookeeper-3.4.8 /opt/zookeeper
+mkdir /opt/zookeeper/data
+echo 1 > /opt/zookeeper/data/myid
+
+cat << EOF > /opt/zookeeper/conf/zoo.cfg
+clientPort=2181
+dataDir=/opt/zookeeper/data
+server.1=$YOUR_FQDN:2888:3888
+EOF
+
+cat << EOF > /opt/zookeeper/conf/zookeeper-env.sh 
+ZOO_LOG_DIR=/opt/zookeeper/logs
+EOF
+echo "PATH=\"/opt/zookeeper/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
+zkServer.sh start
+
+cd ~
 wget http://apache.rediris.es/hadoop/common/hadoop-2.7.3/hadoop-2.7.3-src.tar.gz
 tar -xvf ~/hadoop-2.7.3-src.tar.gz
 mv ~/hadoop-2.7.3-src ~/hadoop-src
