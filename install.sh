@@ -35,7 +35,7 @@ mv /opt/zookeeper-3.4.8 /opt/zookeeper
 mkdir /opt/zookeeper/data
 echo 1 > /opt/zookeeper/data/myid
 
-cat << EOF > /opt/zookeeper/zoo.cfg
+cat << EOF > /opt/zookeeper/conf/zoo.cfg
 clientPort=2181
 dataDir=/opt/zookeeper/data
 server.1=$YOUR_FQDN:2888:3888
