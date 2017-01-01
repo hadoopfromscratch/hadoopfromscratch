@@ -163,6 +163,17 @@ mv /opt/hbase-* /opt/hbase
 echo "PATH=\"/opt/hbase/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
+cat << EOF > /opt/hbase/conf/hbase-site.xml
+<configuration>
+<property><name>hbase.cluster.distributed</name><value>true</value></property>
+<property><name>hbase.rootdir</name><value>hdfs://$YOUR_FQDN:8020/hbase</value></property>
+<property><name>hbase.zookeeper.quorum</name><value>$YOUR_FQDN</value></property>
+</configuration>
+EOF
+
+hbase-daemon.sh start master
+hbase-daemon.sh start regionserver
+
 cd ~
 wget http://apache.rediris.es/hive/hive-2.1.1/apache-hive-2.1.1-src.tar.gz
 tar -xvf apache-hive-2.1.1-src.tar.gz
