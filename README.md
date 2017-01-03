@@ -23,7 +23,7 @@ If everything goes well, Hadoop should be up and running and "Pi"-jobs (two last
 The script will download, compile, configure and run the following pieces of software:
 
 - Java 8u112
-- Ant 1.9.7
+- Ant 1.9.8
 - Maven 3.3.9
 - Zookeeper 3.4.8
 - Hadoop 2.7.3
