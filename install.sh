@@ -19,9 +19,9 @@ echo "PATH=\"/root/maven/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
 cd ~
-wget http://apache.uvigo.es/ant/binaries/apache-ant-1.9.7-bin.tar.bz2
-tar -xvf ~/apache-ant-1.9.7-bin.tar.bz2
-mv ~/apache-ant-1.9.7 ~/ant
+wget http://apache.rediris.es/ant/binaries/apache-ant-1.9.8-bin.tar.gz
+tar -xvf ~/apache-ant-1.9.8-bin.tar.gz
+mv ~/apache-ant-* ~/ant
 echo "PATH=\"/root/ant/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
