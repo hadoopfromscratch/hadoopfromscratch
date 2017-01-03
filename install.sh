@@ -21,7 +21,7 @@ source ~/.bashrc
 cd ~
 wget http://apache.rediris.es/ant/binaries/apache-ant-1.9.8-bin.tar.gz
 tar -xvf ~/apache-ant-1.9.8-bin.tar.gz
-mv ~/apache-ant-* ~/ant
+mv ~/apache-ant-1.9.8 ~/ant
 echo "PATH=\"/root/ant/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
