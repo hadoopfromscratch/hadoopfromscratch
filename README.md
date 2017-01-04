@@ -16,7 +16,9 @@ Download install.sh and run it as root:
 
 ```curl -s https://raw.githubusercontent.com/hadoopfromscratch/hadoopfromscratch/master/install.sh | bash```
 
-If everything goes well, Hadoop should be up and running and "Pi"-jobs (two last lines of install.sh) should execute without errors.
+If everything goes well, the software listed below should be up and running. You can test if everything works properly by executing the test.sh script:
+
+```curl -s https://raw.githubusercontent.com/hadoopfromscratch/hadoopfromscratch/master/test.sh | bash```
 
 ## Software and versions
 
@@ -35,6 +37,6 @@ The script will download, compile, configure and run the following pieces of sof
 
 ## Layout
 
-- /opt will contain installed software (java, hadoop and spark. each in its own directory)
+- /opt will contain installed software (each project goes into its own directory)
 - /data will contain Hadoop's data
 - User's home dir will contain ant and maven directories and all downloaded sources. All its contents can be safely removed after the installation is finished.
