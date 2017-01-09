@@ -214,6 +214,17 @@ hive --service metastore --hiveconf hive.log.dir=/opt/hive/logs --hiveconf hive.
 hive --service hiveserver2 --hiveconf hive.log.dir=/opt/hive/logs --hiveconf hive.log.file=hs2.log >/dev/null 2>&1 &
 
 cd ~
+wget http://apache.rediris.es/pig/pig-0.16.0/pig-0.16.0-src.tar.gz
+tar -xvf pig-0.16.0-src.tar.gz 
+cd pig-0.16.0-src
+sed -i 's/target name="package" depends="jar, docs/target name="package" depends="jar/g' build.xml 
+ant tar
+tar -C/opt -xvf /root/pig-0.16.0-src/build/pig-0.16.0-SNAPSHOT.tar.gz
+mv /opt/pig-* /opt/pig
+echo "PATH=\"/opt/pig/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
+
+cd ~
 wget http://apache.rediris.es/flume/1.7.0/apache-flume-1.7.0-src.tar.gz
 tar -xvf apache-flume-1.7.0-src.tar.gz 
 cd apache-flume-1.7.0-src
