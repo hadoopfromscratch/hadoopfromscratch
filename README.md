@@ -31,6 +31,7 @@ The script will download, compile, configure and run the following pieces of sof
 - Hadoop 2.7.3
 - Spark 2.1.0
 - Hive 2.1.1
+- Pig 0.16
 - HBase 1.2.4
 - Cassandra 3.11
 - Flume 1.7.0
