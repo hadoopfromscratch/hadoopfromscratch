@@ -131,11 +131,11 @@ hdfs dfs -mkdir /tmp
 hdfs dfs -chmod 1777 /tmp
 
 cd ~
-wget http://apache.rediris.es/spark/spark-2.0.2/spark-2.0.2.tgz
-tar -xvf spark-2.0.2.tgz 
-cd ~/spark-2.0.2
+wget http://apache.rediris.es/spark/spark-2.1.0/spark-2.1.0.tgz
+tar -xvf spark-2.1.0.tgz 
+cd ~/spark-2.1.0
 dev/make-distribution.sh --name custom-spark --tgz "-Pyarn,hadoop-2.7" -DskipTests
-tar -C/opt -xvf spark-2.0.2-bin-custom-spark.tgz 
+tar -C/opt -xvf spark-2.1.0-bin-custom-spark.tgz 
 cd /opt
 mv spark-* spark
 echo "PATH=\"/opt/spark/bin:\$PATH\"" >> ~/.bashrc
@@ -212,6 +212,17 @@ EOF
 schematool -dbType mysql -initSchema
 hive --service metastore --hiveconf hive.log.dir=/opt/hive/logs --hiveconf hive.log.file=metastore.log >/dev/null 2>&1 &
 hive --service hiveserver2 --hiveconf hive.log.dir=/opt/hive/logs --hiveconf hive.log.file=hs2.log >/dev/null 2>&1 &
+
+cd ~
+wget http://apache.rediris.es/pig/pig-0.16.0/pig-0.16.0-src.tar.gz
+tar -xvf pig-0.16.0-src.tar.gz 
+cd pig-0.16.0-src
+sed -i 's/target name="package" depends="jar, docs/target name="package" depends="jar/g' build.xml 
+ant -Dhadoopversion=23 tar
+tar -C/opt -xvf /root/pig-0.16.0-src/build/pig-0.16.0-SNAPSHOT.tar.gz
+mv /opt/pig-* /opt/pig
+echo "PATH=\"/opt/pig/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
 
 cd ~
 wget http://apache.rediris.es/flume/1.7.0/apache-flume-1.7.0-src.tar.gz
