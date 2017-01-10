@@ -31,3 +31,11 @@ EOF
 
 # Hive
 beeline -u "jdbc:hive2://$YOUR_FQDN:10000/default" -nroot -e "create table test (id int); insert into test values (1), (2), (3); select count(*) from test; drop table test;"
+
+# Cassandra
+cqlsh -e "create keyspace test with replication = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };"
+cqlsh -e "create table test.test (id int, val varchar, primary key(id));"
+cqlsh -e "insert into test.test (id, val) values (1, 'test value 1'); insert into test.test (id, val) values (2, 'test value 2'); insert into test.test (id, val) values (3, 'test value 3');"
+cqlsh -e "select * from test.test;"
+cqlsh -e "drop table test.test; drop keyspace test;"
+
