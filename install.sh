@@ -106,14 +106,14 @@ cat << EOF > /opt/hadoop/etc/hadoop/mapred-site.xml
   <property><name>mapreduce.framework.name</name><value>yarn</value></property>
   <property><name>mapreduce.job.reduce.slowstart.completedmaps</name><value>0.8</value></property>
   <property><name>yarn.app.mapreduce.am.resource.cpu-vcores</name><value>1</value></property>
-  <property><name>yarn.app.mapreduce.am.resource.mb</name><value>512</value></property>
+  <property><name>yarn.app.mapreduce.am.resource.mb</name><value>1024</value></property>
   <property><name>yarn.app.mapreduce.am.command-opts</name><value>-Djava.net.preferIPv4Stack=true -Xmx400m</value></property>
   <property><name>mapreduce.map.cpu.vcores</name><value>1</value></property>
-  <property><name>mapreduce.map.memory.mb</name><value>512</value></property>
-  <property><name>mapreduce.map.java.opts</name><value>-Djava.net.preferIPv4Stack=true -Xmx400m</value></property>
+  <property><name>mapreduce.map.memory.mb</name><value>1024</value></property>
+  <property><name>mapreduce.map.java.opts</name><value>-Djava.net.preferIPv4Stack=true -Xmx768m</value></property>
   <property><name>mapreduce.reduce.cpu.vcores</name><value>1</value></property>
-  <property><name>mapreduce.reduce.memory.mb</name><value>512</value></property>
-  <property><name>mapreduce.reduce.java.opts</name><value>-Djava.net.preferIPv4Stack=true -Xmx400m</value></property>
+  <property><name>mapreduce.reduce.memory.mb</name><value>1024</value></property>
+  <property><name>mapreduce.reduce.java.opts</name><value>-Djava.net.preferIPv4Stack=true -Xmx768m</value></property>
   <property><name>mapreduce.jobhistory.address</name><value>$YOUR_FQDN:10020</value></property>
   <property><name>mapreduce.jobhistory.webapp.address</name><value>$YOUR_FQDN:19888</value></property>
 </configuration>
