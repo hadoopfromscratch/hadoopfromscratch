@@ -218,7 +218,7 @@ wget http://apache.rediris.es/pig/pig-0.16.0/pig-0.16.0-src.tar.gz
 tar -xvf pig-0.16.0-src.tar.gz 
 cd pig-0.16.0-src
 sed -i 's/target name="package" depends="jar, docs/target name="package" depends="jar/g' build.xml 
-ant -Dhadoopversion=23 tar
+ant -Dhadoopversion=23 -Dzookeeper.version=3.4.8 -Dhadoop-common.version=2.7.3 -Dhadoop-hdfs.version=2.7.3 -Dhadoop-mapreduce.version=2.7.3 tar
 tar -C/opt -xvf /root/pig-0.16.0-src/build/pig-0.16.0-SNAPSHOT.tar.gz
 mv /opt/pig-* /opt/pig
 echo "PATH=\"/opt/pig/bin:\$PATH\"" >> ~/.bashrc
