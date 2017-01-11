@@ -32,6 +32,22 @@ EOF
 # Hive
 beeline -u "jdbc:hive2://$YOUR_FQDN:10000/default" -nroot -e "create table test (id int); insert into test values (1), (2), (3); select count(*) from test; drop table test;"
 
+# Pig
+pig <<EOF
+sh echo "bob male" > /tmp/test.txt
+sh echo "james male" >> /tmp/test.txt
+sh echo "jane female" >> /tmp/test.txt
+sh echo "tom male" >> /tmp/test.txt
+sh echo "sandra female" >> /tmp/test.txt
+rmf /tmp/test.txt
+copyFromLocal /tmp/test.txt /tmp/
+sh rm /tmp/test.txt
+a = LOAD '/tmp/test.txt' USING PigStorage(' ') AS (name, sex);
+b = GROUP a by sex;
+c = FOREACH b GENERATE group, COUNT(a.name);
+DUMP c;
+EOF
+
 # Cassandra
 cqlsh -e "create keyspace test with replication = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };"
 cqlsh -e "create table test.test (id int, val varchar, primary key(id));"
