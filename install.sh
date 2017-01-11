@@ -234,15 +234,25 @@ mv /opt/apache-flume* /opt/flume
 echo "PATH=\"/opt/flume/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
-# Sqoop does not work with hive2 yet
-#cd ~
-#wget http://apache.rediris.es/sqoop/1.4.6/sqoop-1.4.6.tar.gz
-#tar xvf sqoop-1.4.6.tar.gz
-#cd sqoop-1.4.6
-#ant package -Dhadoop.version=2.7.3 -Dhcatalog.version=2.1.0
-#echo "PATH=\"/opt/sqoop/bin:\$PATH\"" >> ~/.bashrc
-#source ~/.bashrc
+cd ~
+yum -y install git asciidoc redhat-lsb-core xmlto
+git clone https://github.com/apache/sqoop.git
+cd sqoop
+ant tar -Dhadoop.version=2.7.3 -Dhcatalog.version=2.1.0
+tar -C/opt -xvf build/sqoop-1.4.7-SNAPSHOT.bin__hadoop-2.7.3.tar.gz
+mv /opt/sqoop-* /opt/sqoop
+echo "PATH=\"/opt/sqoop/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
 
+cat << EOF > /opt/sqoop/conf/sqoop-env.sh 
+export HADOOP_COMMON_HOME=/opt/hadoop
+export HADOOP_MAPRED_HOME=/opt/hadoop/share/hadoop/mapreduce
+export HBASE_HOME=/opt/hbase
+export HIVE_HOME=/opt/hive
+export ZOOCFGDIR=/opt/zookeeper/conf
+EOF
+
+cd ~
 yum -y install git
 git clone git://git.apache.org/cassandra.git /opt/cassandra
 cd /opt/cassandra/
