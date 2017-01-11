@@ -53,7 +53,7 @@ wget http://apache.rediris.es/hadoop/common/hadoop-2.7.3/hadoop-2.7.3-src.tar.gz
 tar -xvf ~/hadoop-2.7.3-src.tar.gz
 mv ~/hadoop-2.7.3-src ~/hadoop-src
 cd ~/hadoop-src
-mvn package -Pdist,native -DskipTests -Dtar
+mvn package -Pdist,native -DskipTests -Dtar -Dzookeeper.version=3.4.8
 tar -C/opt -xvf ~/hadoop-src/hadoop-dist/target/hadoop-2.7.3.tar.gz
 mv /opt/hadoop-* /opt/hadoop
 echo "PATH=\"/opt/hadoop/bin:\$PATH\"" >> ~/.bashrc
