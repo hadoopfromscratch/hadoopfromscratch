@@ -35,6 +35,7 @@ The script will download, compile, configure and run the following pieces of sof
 - HBase 1.2.4
 - Cassandra 3.11
 - Flume 1.7.0
+- Sqoop 1.4.7
 
 ## Layout
 
