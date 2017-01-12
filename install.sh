@@ -261,3 +261,46 @@ ant
 echo "PATH=\"/opt/cassandra/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 cassandra -R
+
+# Hue
+cd ~
+useradd hue
+yum -y install asciidoc cyrus-sasl-devel cyrus-sasl-gssapi cyrus-sasl-plain gcc gcc-c++ krb5-devel libffi-devel libtidy libxml2-devel libxslt-devel make mariadb mariadb-devel openldap-devel python-devel sqlite-devel openssl-devel gmp-devel
+git clone https://github.com/cloudera/hue.git
+cd hue
+git checkout branch-3.11
+make apps
+INSTALL_DIR=/opt/hue make install
+
+cat << EOF > /opt/hue/desktop/conf/hue.ini
+[desktop]
+  secret_key=
+  http_host=0.0.0.0
+  http_port=8000
+  send_dbug_messages=true
+  server_user=hue
+  server_group=hue
+  default_user=root
+  default_hdfs_superuser=root
+  [[auth]]
+    idle_session_timeout=-1
+  [[database]]
+    engine=mysql
+    host=$YOUR_FQDN
+    user=hue
+    password=hue
+    name=hue
+[hadoop]
+  [[hdfs_clusters]]
+    [[[default]]]
+      fs_defaultfs=hdfs://$YOUR_FQDN:8020
+      webhdfs_url=http://$YOUR_FQDN:50070/webhdfs/v1
+  [[yarn_clusters]]
+    [[[default]]]
+      resourcemanager_host=$YOUR_FQDN
+      submit_to=True
+      resourcemanager_api_url=http://$YOUR_FQDN:8088
+      proxy_api_url=http://$YOUR_FQDN:8088
+EOF
+
+nohup /opt/hue/build/env/bin/supervisor 1>/dev/null 2>/dev/null &
