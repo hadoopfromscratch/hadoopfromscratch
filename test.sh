@@ -46,6 +46,7 @@ a = LOAD '/tmp/test.txt' USING PigStorage(' ') AS (name, sex);
 b = GROUP a by sex;
 c = FOREACH b GENERATE group, COUNT(a.name);
 DUMP c;
+rmf /tmp/test.txt
 EOF
 
 # Cassandra
