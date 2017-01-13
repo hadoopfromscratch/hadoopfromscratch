@@ -272,6 +272,13 @@ git checkout branch-3.11
 make apps
 INSTALL_DIR=/opt/hue make install
 
+cat << EOF | mysql
+create database hue;
+grant all privileges on hue.* to 'hue'@'%' identified by 'hue';
+grant all privileges on hue.* to 'hue'@'localhost' identified by 'hue';
+flush privileges;
+EOF
+
 cat << EOF > /opt/hue/desktop/conf/hue.ini
 [desktop]
   secret_key=
@@ -303,4 +310,6 @@ cat << EOF > /opt/hue/desktop/conf/hue.ini
       proxy_api_url=http://$YOUR_FQDN:8088
 EOF
 
+/opt/hue/build/env/bin/hue syncdb --noinput
+/opt/hue/build/env/bin/hue migrate
 nohup /opt/hue/build/env/bin/supervisor 1>/dev/null 2>/dev/null &
