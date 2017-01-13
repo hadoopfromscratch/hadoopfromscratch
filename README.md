@@ -36,6 +36,7 @@ The script will download, compile, configure and run the following pieces of sof
 - Cassandra 3.11
 - Flume 1.7.0
 - Sqoop 1.4.7
+- Hue 3.11
 
 ## Layout
 

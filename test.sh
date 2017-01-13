@@ -46,6 +46,7 @@ a = LOAD '/tmp/test.txt' USING PigStorage(' ') AS (name, sex);
 b = GROUP a by sex;
 c = FOREACH b GENERATE group, COUNT(a.name);
 DUMP c;
+rmf /tmp/test.txt
 EOF
 
 # Cassandra
@@ -55,3 +56,5 @@ cqlsh -e "insert into test.test (id, val) values (1, 'test value 1'); insert int
 cqlsh -e "select * from test.test;"
 cqlsh -e "drop table test.test; drop keyspace test;"
 
+# Hue
+wget -q -O - http://master.local:8000 | grep Cloudera
