@@ -56,5 +56,9 @@ cqlsh -e "insert into test.test (id, val) values (1, 'test value 1'); insert int
 cqlsh -e "select * from test.test;"
 cqlsh -e "drop table test.test; drop keyspace test;"
 
+# Sqoop
+sqoop import --connect jdbc:mysql://master.local/hive --username hive --password hive --target-dir=/tmp/test --table=DBS
+hdfs dfs -rm -r -skipTrash /tmp/test
+
 # Hue
 wget -q -O - http://master.local:8000 | grep Cloudera

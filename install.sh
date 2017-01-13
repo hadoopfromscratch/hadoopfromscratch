@@ -241,6 +241,7 @@ cd sqoop
 ant tar -Dhadoop.version=2.7.3 -Dhcatalog.version=2.1.0
 tar -C/opt -xvf build/sqoop-1.4.7-SNAPSHOT.bin__hadoop-2.7.3.tar.gz
 mv /opt/sqoop-* /opt/sqoop
+cp ~/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar /opt/sqoop/lib/
 echo "PATH=\"/opt/sqoop/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
