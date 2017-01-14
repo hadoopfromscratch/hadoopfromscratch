@@ -90,7 +90,6 @@ cat << EOF > /opt/hadoop/etc/hadoop/yarn-site.xml
   <property><name>yarn.scheduler.maximum-allocation-vcores</name><value>1</value></property>
   <property><name>yarn.nodemanager.resource.memory-mb</name><value>4096</value></property>
   <property><name>yarn.nodemanager.resource.cpu-vcores</name><value>4</value></property>
-  <property><name>yarn.nodemanager.local-dirs</name><value>/data/yarn</value></property>
   <property><name>yarn.nodemanager.aux-services</name><value>mapreduce_shuffle</value></property>
   <property><name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name><value>org.apache.hadoop.mapred.ShuffleHandler</value></property>
   <property><name>yarn.log-aggregation-enable</name><value>true</value></property>
@@ -102,7 +101,6 @@ EOF
 
 cat << EOF > /opt/hadoop/etc/hadoop/mapred-site.xml
 <configuration>
-  <property><name>mapreduce.framework.name</name><value>yarn</value></property>
   <property><name>mapreduce.framework.name</name><value>yarn</value></property>
   <property><name>mapreduce.job.reduce.slowstart.completedmaps</name><value>0.8</value></property>
   <property><name>yarn.app.mapreduce.am.resource.cpu-vcores</name><value>1</value></property>
@@ -126,7 +124,7 @@ hadoop namenode -format
 /opt/hadoop/sbin/yarn-daemon.sh start resourcemanager
 /opt/hadoop/sbin/yarn-daemon.sh start nodemanager
 /opt/hadoop/sbin/mr-jobhistory-daemon.sh start historyserver
-hdfs dfs -mkdir -p /user/history
+hdfs dfs -mkdir -p /user
 hdfs dfs -mkdir /tmp
 hdfs dfs -chmod 1777 /tmp
 
