@@ -265,11 +265,9 @@ cassandra -R
 cd ~
 useradd hue
 yum -y install asciidoc cyrus-sasl-devel cyrus-sasl-gssapi cyrus-sasl-plain gcc gcc-c++ krb5-devel libffi-devel libtidy libxml2-devel libxslt-devel make mariadb mariadb-devel openldap-devel python-devel sqlite-devel openssl-devel gmp-devel
-git clone https://github.com/cloudera/hue.git
-cd hue
-git checkout branch-3.11
-make apps
-INSTALL_DIR=/opt/hue make install
+wget https://dl.dropboxusercontent.com/u/730827/hue/releases/3.11.0/hue-3.11.0.tgz
+tar -xvf hue-3.11.0.tgz
+cd hue-3.11.0
 
 cat << EOF | mysql
 create database hue;
@@ -278,9 +276,9 @@ grant all privileges on hue.* to 'hue'@'localhost' identified by 'hue';
 flush privileges;
 EOF
 
-cat << EOF > /opt/hue/desktop/conf/hue.ini
+cat << EOF > desktop/conf/hue.ini
 [desktop]
-  secret_key=
+  secret_key=ashdofhaoirtoidfjgoianoanweorianwofinawerot
   http_host=0.0.0.0
   http_port=8000
   send_dbug_messages=true
@@ -309,6 +307,5 @@ cat << EOF > /opt/hue/desktop/conf/hue.ini
       proxy_api_url=http://$YOUR_FQDN:8088
 EOF
 
-/opt/hue/build/env/bin/hue syncdb --noinput
-/opt/hue/build/env/bin/hue migrate
+INSTALL_DIR=/opt/hue make install
 nohup /opt/hue/build/env/bin/supervisor 1>/dev/null 2>/dev/null &
