@@ -152,11 +152,11 @@ spark.executor.memory            512m
 EOF
 
 cd ~
-wget http://apache.rediris.es/hbase/1.2.4/hbase-1.2.4-src.tar.gz
-tar -xvf hbase-1.2.4-src.tar.gz 
-cd hbase-1.2.4
+wget http://apache.rediris.es/hbase/1.3.0/hbase-1.3.0-src.tar.gz
+tar -xvf hbase-1.3.0-src.tar.gz 
+cd hbase-1.3.0
 mvn clean package assembly:single -DskipTests -Dhadoop.version=2.7.3 -Dzookeeper.version=3.4.8
-tar -C/opt -xvf hbase-assembly/target/hbase-1.2.4-bin.tar.gz
+tar -C/opt -xvf hbase-assembly/target/hbase-1.3.0-bin.tar.gz
 mv /opt/hbase-* /opt/hbase
 echo "PATH=\"/opt/hbase/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
