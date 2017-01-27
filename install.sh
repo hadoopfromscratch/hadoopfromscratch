@@ -152,11 +152,11 @@ spark.executor.memory            512m
 EOF
 
 cd ~
-wget http://apache.rediris.es/hbase/1.2.4/hbase-1.2.4-src.tar.gz
-tar -xvf hbase-1.2.4-src.tar.gz 
-cd hbase-1.2.4
+wget http://apache.rediris.es/hbase/1.3.0/hbase-1.3.0-src.tar.gz
+tar -xvf hbase-1.3.0-src.tar.gz 
+cd hbase-1.3.0
 mvn clean package assembly:single -DskipTests -Dhadoop.version=2.7.3 -Dzookeeper.version=3.4.8
-tar -C/opt -xvf hbase-assembly/target/hbase-1.2.4-bin.tar.gz
+tar -C/opt -xvf hbase-assembly/target/hbase-1.3.0-bin.tar.gz
 mv /opt/hbase-* /opt/hbase
 echo "PATH=\"/opt/hbase/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
@@ -263,13 +263,12 @@ cassandra -R
 
 # Hue
 cd ~
-useradd hue
 yum -y install asciidoc cyrus-sasl-devel cyrus-sasl-gssapi cyrus-sasl-plain gcc gcc-c++ krb5-devel libffi-devel libtidy libxml2-devel libxslt-devel make mariadb mariadb-devel openldap-devel python-devel sqlite-devel openssl-devel gmp-devel
-git clone https://github.com/cloudera/hue.git
-cd hue
-git checkout branch-3.11
-make apps
-INSTALL_DIR=/opt/hue make install
+wget https://dl.dropboxusercontent.com/u/730827/hue/releases/3.11.0/hue-3.11.0.tgz
+tar -xvf hue-3.11.0.tgz
+cd hue-3.11.0
+sed -i 's/SETUID_USER = "hue"/SETUID_USER = "root"/' desktop/core/src/desktop/supervisor.py
+sed -i 's/SETGID_GROUP = "hue"/SETGID_GROUP = "root"/' desktop/core/src/desktop/supervisor.py
 
 cat << EOF | mysql
 create database hue;
@@ -278,14 +277,14 @@ grant all privileges on hue.* to 'hue'@'localhost' identified by 'hue';
 flush privileges;
 EOF
 
-cat << EOF > /opt/hue/desktop/conf/hue.ini
+cat << EOF > desktop/conf/hue.ini
 [desktop]
-  secret_key=
+  secret_key=ashdofhaoirtoidfjgoianoanweorianwofinawerot
   http_host=0.0.0.0
   http_port=8000
   send_dbug_messages=true
-  server_user=hue
-  server_group=hue
+  server_user=root
+  server_group=root
   default_user=root
   default_hdfs_superuser=root
   [[auth]]
@@ -309,6 +308,5 @@ cat << EOF > /opt/hue/desktop/conf/hue.ini
       proxy_api_url=http://$YOUR_FQDN:8088
 EOF
 
-/opt/hue/build/env/bin/hue syncdb --noinput
-/opt/hue/build/env/bin/hue migrate
+INSTALL_DIR=/opt/hue make install
 nohup /opt/hue/build/env/bin/supervisor 1>/dev/null 2>/dev/null &
