@@ -263,7 +263,6 @@ cassandra -R
 
 # Hue
 cd ~
-useradd hue
 yum -y install asciidoc cyrus-sasl-devel cyrus-sasl-gssapi cyrus-sasl-plain gcc gcc-c++ krb5-devel libffi-devel libtidy libxml2-devel libxslt-devel make mariadb mariadb-devel openldap-devel python-devel sqlite-devel openssl-devel gmp-devel
 wget https://dl.dropboxusercontent.com/u/730827/hue/releases/3.11.0/hue-3.11.0.tgz
 tar -xvf hue-3.11.0.tgz
@@ -282,8 +281,8 @@ cat << EOF > desktop/conf/hue.ini
   http_host=0.0.0.0
   http_port=8000
   send_dbug_messages=true
-  server_user=hue
-  server_group=hue
+  server_user=root
+  server_group=root
   default_user=root
   default_hdfs_superuser=root
   [[auth]]
