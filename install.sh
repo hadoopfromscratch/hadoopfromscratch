@@ -264,9 +264,9 @@ cassandra -R
 # Hue
 cd ~
 yum -y install asciidoc cyrus-sasl-devel cyrus-sasl-gssapi cyrus-sasl-plain gcc gcc-c++ krb5-devel libffi-devel libtidy libxml2-devel libxslt-devel make mariadb mariadb-devel openldap-devel python-devel sqlite-devel openssl-devel gmp-devel
-wget https://dl.dropboxusercontent.com/u/730827/hue/releases/3.11.0/hue-3.11.0.tgz
-tar -xvf hue-3.11.0.tgz
-cd hue-3.11.0
+wget https://dl.dropboxusercontent.com/u/730827/hue/releases/3.12.0/hue-3.12.0.tgz
+tar -xvf hue-3.12.0.tgz
+cd hue-3.12.0
 sed -i 's/SETUID_USER = "hue"/SETUID_USER = "root"/' desktop/core/src/desktop/supervisor.py
 sed -i 's/SETGID_GROUP = "hue"/SETGID_GROUP = "root"/' desktop/core/src/desktop/supervisor.py
 
