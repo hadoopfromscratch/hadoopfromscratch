@@ -170,6 +170,7 @@ cat << EOF > /opt/hbase/conf/hbase-site.xml
 EOF
 
 hbase-daemon.sh start master
+hbase-daemon.sh start thrift
 hbase-daemon.sh start regionserver
 
 cd ~
