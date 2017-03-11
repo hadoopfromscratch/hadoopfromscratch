@@ -57,8 +57,8 @@ cqlsh -e "select * from test.test;"
 cqlsh -e "drop table test.test; drop keyspace test;"
 
 # Sqoop
-sqoop import --connect jdbc:mysql://master.local/hive --username hive --password hive --target-dir=/tmp/test --table=DBS
+sqoop import --connect jdbc:mysql://$YOUR_FQDN/hive --username hive --password hive --target-dir=/tmp/test --table=DBS
 hdfs dfs -rm -r -skipTrash /tmp/test
 
 # Hue
-wget -q -O - http://master.local:8000 | grep Cloudera
+wget -q -O - http://$YOUR_FQDN:8000 | grep Cloudera
