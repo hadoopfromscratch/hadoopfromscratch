@@ -1,6 +1,6 @@
 # HadoopFromScratch
 
-A set of tools to compile and roll out your own Hadoop distro for testing purposes.
+A set of tools to compile and roll out your own Hadoop distro for educational or testing purposes.
 
 ## Requirements
 
