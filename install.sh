@@ -49,12 +49,12 @@ source ~/.bashrc
 zkServer.sh start
 
 cd ~
-wget http://apache.rediris.es/hadoop/common/hadoop-2.7.3/hadoop-2.7.3-src.tar.gz
-tar -xvf ~/hadoop-2.7.3-src.tar.gz
-mv ~/hadoop-2.7.3-src ~/hadoop-src
+wget http://apache.rediris.es/hadoop/common/hadoop-2.8.0/hadoop-2.8.0-src.tar.gz
+tar -xvf ~/hadoop-2.8.0-src.tar.gz
+mv ~/hadoop-2.8.0-src ~/hadoop-src
 cd ~/hadoop-src
 mvn package -Pdist,native -DskipTests -Dtar -Dzookeeper.version=3.4.8
-tar -C/opt -xvf ~/hadoop-src/hadoop-dist/target/hadoop-2.7.3.tar.gz
+tar -C/opt -xvf ~/hadoop-src/hadoop-dist/target/hadoop-2.8.0.tar.gz
 mv /opt/hadoop-* /opt/hadoop
 echo "PATH=\"/opt/hadoop/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
@@ -132,7 +132,7 @@ cd ~
 wget http://apache.rediris.es/spark/spark-2.1.0/spark-2.1.0.tgz
 tar -xvf spark-2.1.0.tgz 
 cd ~/spark-2.1.0
-dev/make-distribution.sh --name custom-spark --tgz "-Pyarn,hadoop-2.7" -DskipTests
+dev/make-distribution.sh --name custom-spark --tgz "-Pyarn,hadoop-2.7" -Dhadoop.version=2.8.0 -DskipTests
 tar -C/opt -xvf spark-2.1.0-bin-custom-spark.tgz 
 cd /opt
 mv spark-* spark
@@ -152,11 +152,11 @@ spark.executor.memory            512m
 EOF
 
 cd ~
-wget http://apache.rediris.es/hbase/1.3.0/hbase-1.3.0-src.tar.gz
-tar -xvf hbase-1.3.0-src.tar.gz 
-cd hbase-1.3.0
-mvn clean package assembly:single -DskipTests -Dhadoop.version=2.7.3 -Dzookeeper.version=3.4.8
-tar -C/opt -xvf hbase-assembly/target/hbase-1.3.0-bin.tar.gz
+wget http://apache.rediris.es/hbase/1.3.1/hbase-1.3.1-src.tar.gz
+tar -xvf hbase-1.3.1-src.tar.gz 
+cd hbase-1.3.1
+mvn clean package assembly:single -DskipTests -Dhadoop.version=2.8.0 -Dzookeeper.version=3.4.8
+tar -C/opt -xvf hbase-assembly/target/hbase-1.3.1-bin.tar.gz
 mv /opt/hbase-* /opt/hbase
 echo "PATH=\"/opt/hbase/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
@@ -177,7 +177,7 @@ cd ~
 wget http://apache.rediris.es/hive/hive-2.1.1/apache-hive-2.1.1-src.tar.gz
 tar -xvf apache-hive-2.1.1-src.tar.gz
 cd apache-hive-2.1.1-src
-mvn clean package -Dhadoop.version=2.7.3 -DskipTests -Pdist
+mvn clean package -Dhadoop.version=2.8.0 -DskipTests -Pdist
 tar -C/opt -xvf ./packaging/target/apache-hive-2.1.1-bin.tar.gz
 mv /opt/apache-hive-* /opt/hive
 echo "PATH=\"/opt/hive/bin:\$PATH\"" >> ~/.bashrc
@@ -216,8 +216,10 @@ cd ~
 wget http://apache.rediris.es/pig/pig-0.16.0/pig-0.16.0-src.tar.gz
 tar -xvf pig-0.16.0-src.tar.gz 
 cd pig-0.16.0-src
+sed -i '/<\/dependencies>/i \
+    <dependency org="org.apache.hadoop" name="hadoop-hdfs-client" rev="${hadoop-hdfs.version}" conf="hadoop23->master"><artifact name="hadoop-hdfs-client" ext="jar" /></dependency>' ivy.xml
 sed -i 's/target name="package" depends="jar, docs/target name="package" depends="jar/g' build.xml 
-ant -Dhadoopversion=23 -Dzookeeper.version=3.4.8 -Dhadoop-common.version=2.7.3 -Dhadoop-hdfs.version=2.7.3 -Dhadoop-mapreduce.version=2.7.3 tar
+ant -Dhadoopversion=23 -Dzookeeper.version=3.4.8 -Dhadoop-common.version=2.8.0 -Dhadoop-hdfs.version=2.8.0 -Dhadoop-mapreduce.version=2.8.0 tar
 tar -C/opt -xvf /root/pig-0.16.0-src/build/pig-0.16.0-SNAPSHOT.tar.gz
 mv /opt/pig-* /opt/pig
 echo "PATH=\"/opt/pig/bin:\$PATH\"" >> ~/.bashrc
@@ -227,7 +229,7 @@ cd ~
 wget http://apache.rediris.es/flume/1.7.0/apache-flume-1.7.0-src.tar.gz
 tar -xvf apache-flume-1.7.0-src.tar.gz 
 cd apache-flume-1.7.0-src
-mvn package -DskipTests -DsourceJavaVersion=1.8 -DtargetJavaVersion=1.8 -Dhadoop2.version=2.7.3 -Dhive.version=2.1.1
+mvn package -DskipTests -DsourceJavaVersion=1.8 -DtargetJavaVersion=1.8 -Dhadoop2.version=2.8.0 -Dhive.version=2.1.1
 tar -C/opt -xvf  flume-ng-dist/target/apache-flume-1.7.0-bin.tar.gz 
 mv /opt/apache-flume* /opt/flume
 echo "PATH=\"/opt/flume/bin:\$PATH\"" >> ~/.bashrc
@@ -237,8 +239,8 @@ cd ~
 yum -y install git asciidoc redhat-lsb-core xmlto
 git clone https://github.com/apache/sqoop.git
 cd sqoop
-ant tar -Dhadoop.version=2.7.3 -Dhcatalog.version=2.1.0
-tar -C/opt -xvf build/sqoop-1.4.7-SNAPSHOT.bin__hadoop-2.7.3.tar.gz
+ant tar -Dhadoop.version=2.8.0 -Dhcatalog.version=2.1.0
+tar -C/opt -xvf build/sqoop-1.4.7-SNAPSHOT.bin__hadoop-2.8.0.tar.gz
 mv /opt/sqoop-* /opt/sqoop
 cp ~/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar /opt/sqoop/lib/
 echo "PATH=\"/opt/sqoop/bin:\$PATH\"" >> ~/.bashrc
