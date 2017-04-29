@@ -28,11 +28,11 @@ The script will download, compile, configure and run the following pieces of sof
 - Ant 1.10.1
 - Maven 3.3.9
 - Zookeeper 3.4.8
-- Hadoop 2.7.3
+- Hadoop 2.8.0
 - Spark 2.1.0
 - Hive 2.1.1
 - Pig 0.16
-- HBase 1.3.0
+- HBase 1.3.1
 - Cassandra 3.11
 - Flume 1.7.0
 - Sqoop 1.4.7
