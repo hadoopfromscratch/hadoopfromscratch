@@ -26,12 +26,12 @@ echo "PATH=\"/root/ant/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
 cd ~
-wget http://apache.rediris.es/zookeeper/zookeeper-3.4.8/zookeeper-3.4.8.tar.gz
-tar -xvf zookeeper-3.4.8.tar.gz 
-cd zookeeper-3.4.8
+wget http://apache.rediris.es/zookeeper/zookeeper-3.4.10/zookeeper-3.4.10.tar.gz
+tar -xvf zookeeper-3.4.10.tar.gz 
+cd zookeeper-3.4.10
 ant clean tar
-tar -C/opt -xvf build/zookeeper-3.4.8.tar.gz 
-mv /opt/zookeeper-3.4.8 /opt/zookeeper
+tar -C/opt -xvf build/zookeeper-3.4.10.tar.gz 
+mv /opt/zookeeper-3.4.10 /opt/zookeeper
 mkdir /opt/zookeeper/data
 echo 1 > /opt/zookeeper/data/myid
 
@@ -53,7 +53,7 @@ wget http://apache.rediris.es/hadoop/common/hadoop-2.8.0/hadoop-2.8.0-src.tar.gz
 tar -xvf ~/hadoop-2.8.0-src.tar.gz
 mv ~/hadoop-2.8.0-src ~/hadoop-src
 cd ~/hadoop-src
-mvn package -Pdist,native -DskipTests -Dtar -Dzookeeper.version=3.4.8
+mvn package -Pdist,native -DskipTests -Dtar -Dzookeeper.version=3.4.10
 tar -C/opt -xvf ~/hadoop-src/hadoop-dist/target/hadoop-2.8.0.tar.gz
 mv /opt/hadoop-* /opt/hadoop
 echo "PATH=\"/opt/hadoop/bin:\$PATH\"" >> ~/.bashrc
@@ -155,7 +155,7 @@ cd ~
 wget http://apache.rediris.es/hbase/1.3.1/hbase-1.3.1-src.tar.gz
 tar -xvf hbase-1.3.1-src.tar.gz 
 cd hbase-1.3.1
-mvn clean package assembly:single -DskipTests -Dhadoop.version=2.8.0 -Dzookeeper.version=3.4.8
+mvn clean package assembly:single -DskipTests -Dhadoop.version=2.8.0 -Dzookeeper.version=3.4.10
 tar -C/opt -xvf hbase-assembly/target/hbase-1.3.1-bin.tar.gz
 mv /opt/hbase-* /opt/hbase
 echo "PATH=\"/opt/hbase/bin:\$PATH\"" >> ~/.bashrc
@@ -219,7 +219,7 @@ cd pig-0.16.0-src
 sed -i '/<\/dependencies>/i \
     <dependency org="org.apache.hadoop" name="hadoop-hdfs-client" rev="${hadoop-hdfs.version}" conf="hadoop23->master"><artifact name="hadoop-hdfs-client" ext="jar" /></dependency>' ivy.xml
 sed -i 's/target name="package" depends="jar, docs/target name="package" depends="jar/g' build.xml 
-ant -Dhadoopversion=23 -Dzookeeper.version=3.4.8 -Dhadoop-common.version=2.8.0 -Dhadoop-hdfs.version=2.8.0 -Dhadoop-mapreduce.version=2.8.0 tar
+ant -Dhadoopversion=23 -Dzookeeper.version=3.4.10 -Dhadoop-common.version=2.8.0 -Dhadoop-hdfs.version=2.8.0 -Dhadoop-mapreduce.version=2.8.0 tar
 tar -C/opt -xvf /root/pig-0.16.0-src/build/pig-0.16.0-SNAPSHOT.tar.gz
 mv /opt/pig-* /opt/pig
 echo "PATH=\"/opt/pig/bin:\$PATH\"" >> ~/.bashrc

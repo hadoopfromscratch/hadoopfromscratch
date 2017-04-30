@@ -27,7 +27,7 @@ The script will download, compile, configure and run the following pieces of sof
 - Java 8u112
 - Ant 1.10.1
 - Maven 3.3.9
-- Zookeeper 3.4.8
+- Zookeeper 3.4.10
 - Hadoop 2.8.0
 - Spark 2.1.0
 - Hive 2.1.1
