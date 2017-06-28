@@ -5,9 +5,9 @@ YOUR_FQDN=localhost
 yum -y install wget gcc gcc-c++ autoconf automake libtool zlib-devel cmake openssl openssl-devel snappy snappy-devel bzip2 bzip2-devel protobuf protobuf-devel
 
 cd ~
-wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz
-tar xvf ~/jdk-8u112-linux-x64.tar.gz
-mv ~/jdk1.8.0_112 /opt/java
+wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz
+tar xvf ~/jdk-8u131-linux-x64.tar.gz
+mv ~/jdk1.8.0_131 /opt/java
 echo "PATH=\"/opt/java/bin:\$PATH\"" >> ~/.bashrc
 echo "export JAVA_HOME=\"/opt/java\"" >> ~/.bashrc
 
@@ -129,11 +129,11 @@ hdfs dfs -mkdir /tmp
 hdfs dfs -chmod 1777 /tmp
 
 cd ~
-wget http://apache.rediris.es/spark/spark-2.1.0/spark-2.1.0.tgz
-tar -xvf spark-2.1.0.tgz 
-cd ~/spark-2.1.0
+wget http://apache.rediris.es/spark/spark-2.1.1/spark-2.1.1.tgz
+tar -xvf spark-2.1.1.tgz 
+cd ~/spark-2.1.1
 dev/make-distribution.sh --name custom-spark --tgz "-Pyarn,hadoop-2.7" -Dhadoop.version=2.8.0 -DskipTests
-tar -C/opt -xvf spark-2.1.0-bin-custom-spark.tgz 
+tar -C/opt -xvf spark-2.1.1-bin-custom-spark.tgz 
 cd /opt
 mv spark-* spark
 echo "PATH=\"/opt/spark/bin:\$PATH\"" >> ~/.bashrc
@@ -239,8 +239,9 @@ cd ~
 yum -y install git asciidoc redhat-lsb-core xmlto
 git clone https://github.com/apache/sqoop.git
 cd sqoop
+git checkout branch-1.4.7
 ant tar -Dhadoop.version=2.8.0 -Dhcatalog.version=2.1.0
-tar -C/opt -xvf build/sqoop-1.4.7-SNAPSHOT.bin__hadoop-2.8.0.tar.gz
+tar -C/opt -xvf build/sqoop-1.4.7.bin__hadoop-2.8.0.tar.gz
 mv /opt/sqoop-* /opt/sqoop
 cp ~/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar /opt/sqoop/lib/
 echo "PATH=\"/opt/sqoop/bin:\$PATH\"" >> ~/.bashrc
