@@ -29,7 +29,7 @@ The script will download, compile, configure and run the following pieces of sof
 - Maven 3.3.9
 - Zookeeper 3.4.10
 - Hadoop 2.8.0
-- Spark 2.1.0
+- Spark 2.1.1
 - Hive 2.1.1
 - Pig 0.16
 - HBase 1.3.1
