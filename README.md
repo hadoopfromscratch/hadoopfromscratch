@@ -24,7 +24,7 @@ If everything goes well, the software listed below should be up and running. You
 
 The script will download, compile, configure and run the following pieces of software:
 
-- Java 8u112
+- Java 8u131
 - Ant 1.10.1
 - Maven 3.3.9
 - Zookeeper 3.4.10
