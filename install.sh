@@ -256,11 +256,12 @@ export ZOOCFGDIR=/opt/zookeeper/conf
 EOF
 
 cd ~
-yum -y install git
-git clone git://git.apache.org/cassandra.git /opt/cassandra
-cd /opt/cassandra/
-git checkout cassandra-3.11
-ant
+wget http://apache.rediris.es/cassandra/3.11.0/apache-cassandra-3.11.0-src.tar.gz
+tar -xvf apache-cassandra-3.11.0-src.tar.gz
+cd apache-cassandra-3.11.0-src
+ant artifacts
+tar -C/opt -xvf build/apache-cassandra-3.11.0-SNAPSHOT-bin.tar.gz
+mv /opt/apache-cassandra-3.11.0-SNAPSHOT /opt/cassandra
 echo "PATH=\"/opt/cassandra/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 cassandra -R
