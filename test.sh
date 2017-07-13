@@ -16,7 +16,7 @@ rm -f /tmp/test.txt
 yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.8.0.jar pi 3 100
 
 # Spark
-spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.1.1.jar 50
+spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.2.0.jar 50
 
 # HBase
 hbase shell <<EOF
