@@ -129,11 +129,11 @@ hdfs dfs -mkdir /tmp
 hdfs dfs -chmod 1777 /tmp
 
 cd ~
-wget http://apache.rediris.es/spark/spark-2.1.1/spark-2.1.1.tgz
-tar -xvf spark-2.1.1.tgz 
-cd ~/spark-2.1.1
+wget http://apache.rediris.es/spark/spark-2.2.0/spark-2.2.0.tgz
+tar -xvf spark-2.2.0.tgz 
+cd ~/spark-2.2.0
 dev/make-distribution.sh --name custom-spark --tgz "-Pyarn,hadoop-2.7" -Dhadoop.version=2.8.0 -DskipTests
-tar -C/opt -xvf spark-2.1.1-bin-custom-spark.tgz 
+tar -C/opt -xvf spark-2.2.0-bin-custom-spark.tgz 
 cd /opt
 mv spark-* spark
 echo "PATH=\"/opt/spark/bin:\$PATH\"" >> ~/.bashrc
