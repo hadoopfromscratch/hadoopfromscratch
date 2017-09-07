@@ -13,7 +13,7 @@ hdfs dfs -rm -skipTrash /tmp/test.txt
 rm -f /tmp/test.txt
 
 # YARN and MapReduce
-yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.8.0.jar pi 3 100
+yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.8.1.jar pi 3 100
 
 # Spark
 spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.2.0.jar 50
