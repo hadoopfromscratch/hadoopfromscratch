@@ -24,19 +24,18 @@ If everything goes well, the software listed below should be up and running. You
 
 The script will download, compile, configure and run the following pieces of software:
 
-- Java 8u131
-- Ant 1.10.1
-- Maven 3.3.9
-- Zookeeper 3.4.10
-- Hadoop 2.8.1
-- Spark 2.2.0
-- Hive 2.3.0
-- Pig 0.16
-- HBase 1.3.1
-- Cassandra 3.11
-- Flume 1.7.0
+- Java 8u171
+- Ant 1.10.3
+- Maven 3.5.3
+- Zookeeper 3.4.11
+- Hadoop 2.9.0
+- Spark 2.3.0
+- Hive 2.3.3
+- Pig 0.17
+- HBase 1.4.3
+- Flume 1.8.0
 - Sqoop 1.4.7
-- Hue 3.12.0
+- Hue 4.1.0
 
 ## Layout
 
