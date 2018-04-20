@@ -13,10 +13,10 @@ hdfs dfs -rm -skipTrash /tmp/test.txt
 rm -f /tmp/test.txt
 
 # YARN and MapReduce
-yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.8.1.jar pi 3 100
+yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.9.0.jar pi 3 100
 
 # Spark
-spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.2.0.jar 50
+spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master yarn /opt/spark/examples/jars/spark-examples_2.11-2.3.0.jar 50
 
 # HBase
 hbase shell <<EOF
@@ -47,14 +47,8 @@ b = GROUP a by sex;
 c = FOREACH b GENERATE group, COUNT(a.name);
 DUMP c;
 rmf /tmp/test.txt
+quit; 
 EOF
-
-# Cassandra
-cqlsh -e "create keyspace test with replication = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };"
-cqlsh -e "create table test.test (id int, val varchar, primary key(id));"
-cqlsh -e "insert into test.test (id, val) values (1, 'test value 1'); insert into test.test (id, val) values (2, 'test value 2'); insert into test.test (id, val) values (3, 'test value 3');"
-cqlsh -e "select * from test.test;"
-cqlsh -e "drop table test.test; drop keyspace test;"
 
 # Sqoop
 sqoop import --connect jdbc:mysql://$YOUR_FQDN/hive --username hive --password hive --target-dir=/tmp/test --table=DBS
