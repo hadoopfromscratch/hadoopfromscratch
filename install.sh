@@ -14,7 +14,7 @@ echo "export JAVA_HOME=\"/opt/java\"" >> ~/.bashrc
 cd ~
 wget http://apache.rediris.es/maven/maven-3/3.5.3/binaries/apache-maven-3.5.3-bin.tar.gz
 tar xvf ~/apache-maven-3.5.3-bin.tar.gz
-mv ~/apache-maven-3.3.9 ~/maven
+mv ~/apache-maven-3.5.3 ~/maven
 echo "PATH=\"/root/maven/bin:\$PATH\"" >> ~/.bashrc
 source ~/.bashrc
 
