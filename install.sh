@@ -256,6 +256,16 @@ export HIVE_HOME=/opt/hive
 export ZOOCFGDIR=/opt/zookeeper/conf
 EOF
 
+# Oozie
+cd ~
+wget http://apache.rediris.es/oozie/5.0.0/oozie-5.0.0.tar.gz
+tar -xvf oozie-5.0.0.tar.gz
+cd oozie-5.0.0
+mvn clean package assembly:single -DskipTests -Dhadoop.version=2.9.0 -Dspark.version=2.3.0 -Dspark.scala.binary.version=2.11 -Dhbase.version=1.4.3
+tar -xvf distro/target/oozie-5.0.0-distro.tar.gz
+echo "PATH=\"/opt/oozie/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
+
 # Hue
 cd ~
 yum -y install asciidoc cyrus-sasl-devel cyrus-sasl-gssapi cyrus-sasl-plain gcc gcc-c++ krb5-devel libffi-devel libtidy libxml2-devel libxslt-devel make mariadb mariadb-devel openldap-devel python-devel sqlite-devel openssl-devel gmp-devel
